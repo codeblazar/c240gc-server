@@ -12,7 +12,7 @@ An AI stack server setup with n8n workflow automation and Flowise AI flows, back
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/c240gc-server.git
+   git clone https://github.com/codeblazar/c240gc-server.git
    cd c240gc-server
    ```
 
