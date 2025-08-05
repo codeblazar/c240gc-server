@@ -11,6 +11,19 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  chromadb:
+    image: chromadb/chroma:latest
+    restart: always
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - chromadb-data:/chroma
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+       
   n8n:
     image: n8nio/n8n:latest
     restart: always
@@ -38,6 +51,9 @@ services:
   flowise:
     image: flowiseai/flowise:latest
     restart: always
+    depends_on:
+      chromadb:
+        condition: service_healthy
     ports:
       - "127.0.0.1:3000:${FLOWISE_PORT:-3000}"
     env_file:
@@ -48,6 +64,7 @@ services:
       SECRETKEY_PATH: ${FLOWISE_SECRETKEY_PATH:-/data/.secret}
       LOG_PATH: ${FLOWISE_LOG_PATH:-/data/logs}
       BLOB_STORAGE_PATH: ${FLOWISE_BLOB_STORAGE_PATH:-/data/storage}
+      CHROMA_URL: ${CHROMA_URL}
     volumes:
       - flowise-data:/data
 
@@ -55,3 +72,4 @@ volumes:
   postgres-data:
   n8n-data:
   flowise-data:
+  chromadb-data:
