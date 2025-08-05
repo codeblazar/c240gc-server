@@ -1,0 +1,22 @@
+# Docker
+*.log
+
+# Environment
+.env
+
+# Data volumes  
+postgres-data/
+n8n-data/
+flowise-data/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Cloudflare
+.cloudflared/
+cert.pem
